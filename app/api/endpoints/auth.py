@@ -67,8 +67,8 @@ REFRESH_TOKEN_RESPONSES: dict[int | str, dict[str, Any]] = {
     description="OAuth2 compatible token, get an access token for future requests using username and password",
 )
 async def login_access_token(
-    session: AsyncSession = Depends(deps.get_session),
-    form_data: OAuth2PasswordRequestForm = Depends(),
+        session: AsyncSession = Depends(deps.get_session),
+        form_data: OAuth2PasswordRequestForm = Depends(),
 ) -> AccessTokenResponse:
     user = await session.scalar(select(User).where(User.email == form_data.username))
 
@@ -112,8 +112,8 @@ async def login_access_token(
     description="OAuth2 compatible token, get an access token for future requests using refresh token",
 )
 async def refresh_token(
-    data: RefreshTokenRequest,
-    session: AsyncSession = Depends(deps.get_session),
+        data: RefreshTokenRequest,
+        session: AsyncSession = Depends(deps.get_session),
 ) -> AccessTokenResponse:
     token = await session.scalar(
         select(RefreshToken)
@@ -165,8 +165,8 @@ async def refresh_token(
     status_code=status.HTTP_201_CREATED,
 )
 async def register_new_user(
-    new_user: UserCreateRequest,
-    session: AsyncSession = Depends(deps.get_session),
+        new_user: UserCreateRequest,
+        session: AsyncSession = Depends(deps.get_session),
 ) -> User:
     user = await session.scalar(select(User).where(User.email == new_user.email))
     if user is not None:

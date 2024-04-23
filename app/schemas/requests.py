@@ -1,4 +1,5 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, HttpUrl
+from pydantic_core import Url
 
 
 class BaseRequest(BaseModel):
@@ -17,3 +18,21 @@ class UserUpdatePasswordRequest(BaseRequest):
 class UserCreateRequest(BaseRequest):
     email: EmailStr
     password: str
+
+
+class PhotoUpdateRequest(BaseRequest):
+    id: int
+    photo_url: HttpUrl
+
+
+class MemoryCreateRequest(BaseRequest):
+    header: str
+    text: str
+    photos: list[Url] | None
+
+
+class MemoryUpdateRequest(BaseRequest):
+    id: int
+    header: str
+    text: str
+    photos: list[PhotoUpdateRequest] | None

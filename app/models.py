@@ -40,6 +40,7 @@ class User(Base):
     )
     hashed_password: Mapped[str] = mapped_column(String(128), nullable=False)
     refresh_tokens: Mapped[list["RefreshToken"]] = relationship(back_populates="user")
+    memories: Mapped[list["Memory"]] = relationship(back_populates="user")
 
 
 class RefreshToken(Base):
@@ -55,3 +56,25 @@ class RefreshToken(Base):
         ForeignKey("user_account.user_id", ondelete="CASCADE"),
     )
     user: Mapped["User"] = relationship(back_populates="refresh_tokens")
+
+
+class Memory(Base):
+    __tablename__ = "memory"
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.user_id", ondelete="CASCADE"))
+
+    header: Mapped[str]
+    text: Mapped[str | None]
+
+    user: Mapped["User"] = relationship(back_populates="memories")
+    photos: Mapped[list["Photo"]] = relationship(lazy="joined")
+
+
+class Photo(Base):
+    __tablename__ = "photo"
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.user_id", ondelete="CASCADE"))
+    user_memory_id: Mapped[int] = mapped_column(ForeignKey("memory.id", ondelete="CASCADE"))
+    photo_url: Mapped[str]
