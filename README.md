@@ -2,8 +2,7 @@
 \
 ## Quickstart
 
-### 2. Install dependecies with [Poetry](https://python-poetry.org/docs/)
-
+### 1. Установка зависимостей 
 ```bash
 cd your_project_name
 
@@ -11,9 +10,7 @@ cd your_project_name
 poetry install
 ```
 
-Note, be sure to use `python3.12` with this template with either poetry or standard venv & pip, if you need to stick to some earlier python version, you should adapt it yourself (remove new versions specific syntax for example `str | int` for python < 3.10)
-
-### 3. Setup database and migrations
+### 2. Запуск докера с Postgres
 
 ```bash
 ### Setup database
@@ -23,16 +20,15 @@ docker-compose up -d
 alembic upgrade head
 ```
 
-### 4. Now you can run app
+### 3. Запуск приложения
 
 ```bash
-### And this is it:
 uvicorn app.main:app --reload
 
 ```
 
 
-### 5. Запуск тестов
+### 4. Запуск тестов
 ```bash
 pytest
 ```
@@ -44,8 +40,11 @@ pytest
 	и изменение ендпоинта поиска остальных воспоминанием с добавлением условия, чтобы флаг был публичным
 	3. Анонимные воспоминания - Добавление флага анонимности к воспоминанием. Необходимо добавить проверку, 
 	чтобы при выводе в ендпоинте заменять user_id - на uuid анонимного пользователя
-	4. Создание новой таблицы в БД friends со связями Many-to-Many. Создание ручек добавление в друзья/ удаления и просмотра
-	5. Лента только друзей - создание ручек для вывода постов согласно условию соотвествия в 
+	4. Создание новой таблицы в БД friends с отношениями Many-to-Many. Создание ручек добавление в друзья/ удаления и просмотра
+	5. Лента только друзей - создание ручек для вывода постов согласно условию соотвествия со списком 
+ 	6. Возможность добавить к воспоминанию несколько медиа - реализовано
+
+
 
 
 	
