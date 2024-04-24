@@ -18,16 +18,17 @@ class PostgresOrm:
 
     @staticmethod
     async def get_memories(session: AsyncSession, current_user: User) -> Iterable:
-        data = await session.execute(select(Memory).where(current_user.user_id == Memory.user_id))
+        data = await session.execute(
+            select(Memory).where(current_user.user_id == Memory.user_id)
+        )
         return data.unique().scalars()
 
     @staticmethod
-    async def get_memory(session: AsyncSession, current_user: User, memory_id: int) -> Iterable:
+    async def get_memory(session: AsyncSession, memory_id: int) -> Iterable | None:
         data = await session.execute(
-            select(Memory).where(and_(Memory.id == memory_id, current_user.user_id == Memory.user_id)
-                                 )
+            select(Memory).where(Memory.id == memory_id)
         )
-        return data.unique().scalar_one()
+        return data.scalars().first()
 
     @staticmethod
     async def set_memory(session: AsyncSession, current_user: User, memory: MemoryCreateRequest) -> bool:
@@ -70,5 +71,5 @@ class PostgresOrm:
                     Photo.user_id == current_user.user_id,
                 )
                 ).values(photo_url=str(photo.photo_url))
-                                      )
+                )
         await session.commit()

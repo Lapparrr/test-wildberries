@@ -18,7 +18,7 @@ async def get_other_memories(
     """
     Метод для просмотра списка воспоминаний всех остальных пользователей
     """
-    responses = PostgresOrm.get_other_memories(session, current_user)
+    responses = await PostgresOrm.get_other_memories(session, current_user)
     return [MemoryResponse.from_orm(response) for response in responses]
 
 
@@ -30,20 +30,19 @@ async def get_memories(
     """
     Метод для просмотра воспоминаний пользователя
     """
-    responses = PostgresOrm.get_memories(session, current_user)
+    responses = await PostgresOrm.get_memories(session, current_user)
     return [MemoryResponse.from_orm(response) for response in responses]
 
 
 @router.get('/{memory_id}')
 async def get_memory(
         memory_id: int,
-        current_user: User = Depends(deps.get_current_user),
         session: AsyncSession = Depends(deps.get_session),
-) -> MemoryResponse:
+) -> MemoryResponse | None:
     """
     Получение воспоминания по id
     """
-    response = PostgresOrm.get_memory(session, current_user, memory_id)
+    response = await PostgresOrm.get_memory(session, memory_id)
     return MemoryResponse.from_orm(response)
 
 

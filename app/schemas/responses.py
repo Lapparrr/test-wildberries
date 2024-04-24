@@ -30,4 +30,4 @@ class MemoryResponse(BaseResponse):
     user_id: UUID
     header: str
     text: str | None
-    photos: list[PhotoResponse]
+    photos: list[PhotoResponse] | None
