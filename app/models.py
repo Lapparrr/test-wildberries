@@ -47,7 +47,9 @@ class Memory(Base):
     __tablename__ = "memory"
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.user_id", ondelete="CASCADE"))
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("user_account.user_id", ondelete="CASCADE")
+    )
 
     header: Mapped[str]
     text: Mapped[str | None]
@@ -60,6 +62,10 @@ class Photo(Base):
     __tablename__ = "photo"
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.user_id", ondelete="CASCADE"))
-    user_memory_id: Mapped[int] = mapped_column(ForeignKey("memory.id", ondelete="CASCADE"))
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("user_account.user_id", ondelete="CASCADE")
+    )
+    user_memory_id: Mapped[int] = mapped_column(
+        ForeignKey("memory.id", ondelete="CASCADE")
+    )
     photo_url: Mapped[str]
