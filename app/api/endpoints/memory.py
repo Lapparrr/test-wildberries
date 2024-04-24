@@ -37,6 +37,7 @@ async def get_memories(
 @router.get('/{memory_id}')
 async def get_memory(
         memory_id: int,
+        current_user: User = Depends(deps.get_current_user),
         session: AsyncSession = Depends(deps.get_session),
 ) -> MemoryResponse | None:
     """
